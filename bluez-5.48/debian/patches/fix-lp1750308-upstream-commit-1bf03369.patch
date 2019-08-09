@@ -1,0 +1,37 @@
+From 1bf0336942fd093a0f8fa890eb026e1dc379f35f Mon Sep 17 00:00:00 2001
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Date: Tue, 20 Feb 2018 11:11:26 +0200
+Subject: [PATCH] shared/io: Don't process HUP cond before others
+
+When a HUP happens there maybe data left to be processed so the
+disconnect handler shall be called last.
+---
+ src/shared/io-glib.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/src/shared/io-glib.c b/src/shared/io-glib.c
+index 6687a6b28..d62de4e10 100644
+--- a/src/shared/io-glib.c
++++ b/src/shared/io-glib.c
+@@ -179,6 +179,7 @@ static struct io_watch *watch_new(struct io *io, GIOCondition cond,
+ 				io_destroy_func_t destroy)
+ {
+ 	struct io_watch *watch;
++	int prio;
+ 
+ 	watch = g_try_new0(struct io_watch, 1);
+ 	if (!watch)
+@@ -189,7 +190,9 @@ static struct io_watch *watch_new(struct io *io, GIOCondition cond,
+ 	watch->destroy = destroy;
+ 	watch->user_data = user_data;
+ 
+-	watch->id = g_io_add_watch_full(io->channel, G_PRIORITY_DEFAULT,
++	prio = cond == G_IO_HUP ? G_PRIORITY_DEFAULT_IDLE : G_PRIORITY_DEFAULT;
++
++	watch->id = g_io_add_watch_full(io->channel, prio,
+ 						cond | G_IO_ERR | G_IO_NVAL,
+ 						watch_callback, watch,
+ 						watch_destroy);
+-- 
+2.15.1
+

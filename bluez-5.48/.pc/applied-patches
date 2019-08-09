@@ -1,0 +1,11 @@
+0001-work-around-Logitech-diNovo-Edge-keyboard-firmware-i.patch
+bluetooth.conf.patch
+0001-Allow-using-obexd-without-systemd-in-the-user-sessio.patch
+0001-obex-Use-GLib-helper-function-to-manipulate-paths.patch
+change_path_of_hogsuspend.patch
+migrate_scripts_python3.patch
+fix-lp1750308-upstream-commit-1bf03369.patch
+fix-lp1759628-upstream-commit-1873096352.patch
+0001-obexd-plugins-import-PBAP-ebook-support-from-upstrea.patch
+0001-obexd-plugins-port-ebook-support-to-the-latest-EDS.patch
+0002-hostname-handle-chassis-type-handset.patch
