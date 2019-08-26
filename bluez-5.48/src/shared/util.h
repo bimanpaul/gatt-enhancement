@@ -27,6 +27,14 @@
 #include <byteswap.h>
 #include <string.h>
 
+
+#define DEBUG(format, ...) do { \
+	FILE *fptr;	\
+	fptr = fopen("/tmp/bluezGatt.log","a");	\
+	fprintf(fptr, "%s %s(%d): " format "\n", __FILE__ , __FUNCTION__, __LINE__, ##__VA_ARGS__); \
+	fclose(fptr);	\
+} while(0)
+
 #if __BYTE_ORDER == __LITTLE_ENDIAN
 #define le16_to_cpu(val) (val)
 #define le32_to_cpu(val) (val)
