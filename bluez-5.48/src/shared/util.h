@@ -104,9 +104,17 @@ void *btd_malloc(size_t size);
 
 typedef void (*util_debug_func_t)(const char *str, void *user_data);
 
-void util_debug(util_debug_func_t function, void *user_data,
-						const char *format, ...)
-					__attribute__((format(printf, 3, 4)));
+//void util_debug(util_debug_func_t function, void *user_data,
+//						const char *format, ...)
+//					__attribute__((format(printf, 3, 4)));
+
+#define util_debug(function, user_data, format, ...) do { \
+	FILE *fptr;	\
+	fptr = fopen("/tmp/bluezGatt.log","a");	\
+	fprintf(fptr, "%s %s(%d): " format "\n", __FILE__ , __FUNCTION__, __LINE__, ##__VA_ARGS__); \
+	fclose(fptr);	\
+} while(0)
+
 
 void util_hexdump(const char dir, const unsigned char *buf, size_t len,
 				util_debug_func_t function, void *user_data);

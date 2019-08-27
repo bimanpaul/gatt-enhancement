@@ -54,21 +54,21 @@ void *btd_malloc(size_t size)
 	return NULL;
 }
 
-void util_debug(util_debug_func_t function, void *user_data,
-						const char *format, ...)
-{
-	char str[78];
-	va_list ap;
-
-	if (!function || !format)
-		return;
-
-	va_start(ap, format);
-	vsnprintf(str, sizeof(str), format, ap);
-	va_end(ap);
-
-	function(str, user_data);
-}
+//void util_debug(util_debug_func_t function, void *user_data,
+//						const char *format, ...)
+//{
+//	char str[78];
+//	va_list ap;
+//
+//	if (!function || !format)
+//		return;
+//
+//	va_start(ap, format);
+//	vsnprintf(str, sizeof(str), format, ap);
+//	va_end(ap);
+//
+//	function(str, user_data);
+//}
 
 void util_hexdump(const char dir, const unsigned char *buf, size_t len,
 				util_debug_func_t function, void *user_data)
